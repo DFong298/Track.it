@@ -19,13 +19,10 @@
 
 .add-stock-button {
     color: #8F3F3F;
-    font-size: 40px;
+    font-size: 18px;
+    font-weight: 500;
     background-color: rgba(52, 52, 52, 0.0);
     border-color: rgba(52, 52, 52, 0.0);
-    position: relative;
-    display: flex;
-    left: 90vh;
-    top: 50vh;
 }
 
 .add-stock-button:hover {
