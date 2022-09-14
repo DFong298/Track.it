@@ -1,0 +1,34 @@
+.portfolios-page {
+    width: 100%;
+    height: 100%;
+    background-color: #FFFDD0;
+    position: absolute;
+}
+
+.test-button {
+    left: 50vh;
+    top: 50%;
+}
+
+.data-table {
+    position: relative;
+    left: 20vw;
+    max-width: 1250px;
+    color: black;
+}
+
+.add-stock-button {
+    color: #8F3F3F;
+    font-size: 40px;
+    background-color: rgba(52, 52, 52, 0.0);
+    border-color: rgba(52, 52, 52, 0.0);
+    position: relative;
+    display: flex;
+    left: 90vh;
+    top: 50vh;
+}
+
+.add-stock-button:hover {
+    cursor: pointer;
+    color: maroon;
+}

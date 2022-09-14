@@ -1,0 +1,56 @@
+.home-page {
+    width: 100%;
+    height: 100%;
+    background-color: #FFFDD0;
+    position: absolute;
+}
+
+.wrapper {
+    display: block;
+    top: 30vh;
+    position: relative;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.welcome {
+    display: block;
+    position: relative;
+    font-size: 84px;
+    text-align: center;
+    color: #8F3F3F;
+    font-family: 'Lato', sans-serif;
+}
+
+.main-banner {
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.get-started {
+    background-color: #8F3F3F;
+    border: none;
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 90px;
+    color: #FFFDD0;
+    font-size: 44px;
+    font-family: 'Lato', sans-serif;
+    border-radius: 15px;
+}
+
+.get-started:hover {
+    cursor: pointer;
+    background-color: maroon;
+    color: #F6F0BC;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
