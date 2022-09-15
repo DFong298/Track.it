@@ -14,6 +14,7 @@ import Paper from '@mui/material/Paper';
 const PortfolioDisplay = () => {
 
     const [data, setData] = useState([])
+    const [isUpdated, setIsUpdated] = useState(false)
 
     const retrievePortfolio = async () => {
         await Axios.get('http://localhost:3001/retrievePortfolio', {
@@ -22,9 +23,20 @@ const PortfolioDisplay = () => {
         });
     }
 
+    const updatePortfolio = async () => {
+        await Axios.get('http://localhost:3001/updatePortfolio', {
+        }).then((response) => {
+            setIsUpdated(true)
+        });
+    }
+
+    useEffect(() => {
+        updatePortfolio();
+    }, [])
+
     useEffect(() => {
         retrievePortfolio();
-    }, [])
+    }, [isUpdated])
 
     useEffect(() => {
         console.log(data)
@@ -77,7 +89,7 @@ const PortfolioDisplay = () => {
                         <TableCell align="center" width='12%'></TableCell>
                         <TableCell align="center" width='12%'></TableCell>
                         <TableCell align="center" width='12%'></TableCell>
-                        <TableCell align="center" width='12%'>Total Day %</TableCell>
+                        <TableCell align="center" width='12%'></TableCell>
                         <TableCell align="center" width='12%'>Total Portfolio %</TableCell>
                         <TableCell align='center' width='12%'>Portfolio Value</TableCell>
                     </TableRow>

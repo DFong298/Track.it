@@ -18,7 +18,7 @@ const db = mysql.createConnection({
 })
 
 app.get('/retrievePortfolio', (req, res) => {
-    var sqlQuery = 'SELECT * FROM portfolio';
+    let sqlQuery = 'SELECT * FROM portfolio';
     db.query(sqlQuery, function(err, result, fields) {
         if (err) {
             console.log(err);
@@ -29,10 +29,46 @@ app.get('/retrievePortfolio', (req, res) => {
 })
 
 
+
+
+app.get('/updatePortfolio', (req, res) => {
+    let sqlQuery ='SELECT ticker, numshares, pricebought FROM track_it.portfolio';
+    db.query(sqlQuery, async function(err, result) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(result)
+            for (let i = 0; i < result.length; i++){
+                let options = {
+                    method: 'GET',
+                    url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${result[i].ticker}`,
+                    params: {},
+                    headers: {
+                        'x-api-key': 'Z0vg8MtmfgC9Cp5J7wCJ70DHAf7hBQB2f6KwgDje'
+                    }
+                };
+                console.log(result[i].ticker, result[i].numshares, result[i].pricebought)
+                let response = await Axios.request(options)
+
+                let updateQuery =`UPDATE track_it.portfolio SET daychange = "${parseFloat(response.data.quoteResponse.result[0].regularMarketChange).toFixed(2)}", 
+                        currentprice = "${response.data.quoteResponse.result[0].regularMarketPrice}",
+                        totalchange = "${((response.data.quoteResponse.result[0].regularMarketPrice - result[i].pricebought) / result[i].pricebought).toFixed(2) * 100}",
+                        totalvalue = "${result[i].numshares * response.data.quoteResponse.result[0].regularMarketPrice}"
+                        WHERE ticker = "${result[i].ticker}"`;
+                db.query(updateQuery, function(err, result) {
+                    if (err) console.log(err)
+                    else console.log("Successfully updated")
+                })
+            }
+        }
+    })
+})
+
+
 app.post('/getData', (req, res) => {
     let ticker = req.body.ticker
 
-    var options = {
+    let options = {
         method: 'GET',
         url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${ticker}`,
         params: {},
@@ -59,8 +95,8 @@ app.post('/sendData', (req, res) => {
     let totalChange = parseFloat(req.body.totalChange).toFixed(2)*100
     let totalValue = parseFloat(req.body.totalValue).toFixed(2)
 
-    var sqlQuery = 'INSERT INTO track_it.portfolio (ticker, stockname, numshares, pricebought, currentprice, daychange, totalchange, totalvalue) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-    var values = [ticker, stockname, numShares, priceBought, currentPrice, dayChange, totalChange, totalValue]
+    let sqlQuery = 'INSERT INTO track_it.portfolio (ticker, stockname, numshares, pricebought, currentprice, daychange, totalchange, totalvalue) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+    let values = [ticker, stockname, numShares, priceBought, currentPrice, dayChange, totalChange, totalValue]
 
     db.query(sqlQuery, values, (err, result) => {
         if (err) throw err;
@@ -76,7 +112,7 @@ app.post('/createPortfolio', (req, res) => {
     let pName = req.body.pName;
     pName = pName.replaceAll(" ", "_");
 
-    var sqlQuery = `CREATE TABLE ${pName} (id INT AUTO_INCREMENT PRIMARY KEY, ticker VARCHAR(255), priceBought FLOAT(6,2), currentPrice FLOAT(6,2), dayChange FLOAT(6, 2), totalChange FLOAT(6,2))`;
+    let sqlQuery = `CREATE TABLE ${pName} (id INT AUTO_INCREMENT PRIMARY KEY, ticker letCHAR(255), priceBought FLOAT(6,2), currentPrice FLOAT(6,2), dayChange FLOAT(6, 2), totalChange FLOAT(6,2))`;
     db.query(sqlQuery, function (err, result) {
         if (err) {
             console.log(err);
