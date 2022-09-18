@@ -28,9 +28,9 @@ const PortfolioDisplay = () => {
     const updatePortfolio = async () => {
         await Axios.get('http://localhost:3001/updatePortfolio', {
         }).then((response) => {
-            //setTotalChange(response.data[0])
-            //setTotalValue(response.data[1])
-            console.log(response)
+            setTotalChange(response.data.totalChange)
+            setTotalValue(response.data.totalValue)
+            console.log(response.data)
             setIsUpdated(true)
         });
     }
@@ -40,13 +40,11 @@ const PortfolioDisplay = () => {
     }, [])
 
     useEffect(() => {
-        updatePortfolio();
         retrievePortfolio();
     }, [isUpdated])
 
     useEffect(() => {
         console.log(data)
-        updatePortfolio();
     }, [data]) 
 
     return(

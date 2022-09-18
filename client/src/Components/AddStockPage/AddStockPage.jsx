@@ -23,7 +23,7 @@ const AddStockPage = () => {
             setName(response.data.quoteResponse.result[0].shortName)
             setCurrentPrice(response.data.quoteResponse.result[0].regularMarketPrice);
             setDayChange(response.data.quoteResponse.result[0].regularMarketChangePercent);
-            setTotalChange((response.data.quoteResponse.result[0].regularMarketPrice - priceBought)/priceBought);
+            setTotalChange(100 * (response.data.quoteResponse.result[0].regularMarketPrice - priceBought)/priceBought);
             setTotalValue(currentPrice * numShares)
             console.log("its coming")
             console.log(currentPrice, dayChange, totalChange)
