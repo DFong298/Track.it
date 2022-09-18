@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
 import {useState} from 'react';
-import { HashRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Sidebar from './Components/Sidebar/Sidebar.jsx'
 import HomePage from './Components/Homepage/Homepage';
-import PortfolioDisplay from './Components/PortfolioDisplay/PortfolioDisplay'
+import PortfolioDisplay from './Components/PortfolioDisplay/PortfolioDisplay';
 import AddStockPage from './Components/AddStockPage/AddStockPage';
+import InfoPage from './Components/InfoPage/InfoPage';
 import Axios from 'axios';
 
 
@@ -29,7 +30,8 @@ function App() {
         <Routes>
           <Route exact path='/' element={<HomePage/>}/>
           <Route path='/portfolios' element={<PortfolioDisplay/>} />
-          <Route path='/addstock' element={<AddStockPage/>}/>
+          <Route path='/addstock' element={<AddStockPage/>} />
+          <Route path='/info' element={<InfoPage/>}/>
         </Routes>
       </HashRouter>
     </div>

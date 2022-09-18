@@ -7,7 +7,13 @@
 
 .stock-form {
     position: relative;
-    left:20vh;
-    top: 50vh;
-    background-color: azure;
+    width: 50%;
+    height: 40%;
+    left: 50vh;
+    top: 20vh;
+    border-radius: 16px;
+    border-color: #8F3F3F;
+    border-width: 3px;
+    border-style: solid;
+    background-color: white;
 }

@@ -24,7 +24,7 @@ const AddStockPage = () => {
             setCurrentPrice(response.data.quoteResponse.result[0].regularMarketPrice);
             setDayChange(response.data.quoteResponse.result[0].regularMarketChangePercent);
             setTotalChange((response.data.quoteResponse.result[0].regularMarketPrice - priceBought)/priceBought);
-            setTotalValue(priceBought * numShares)
+            setTotalValue(currentPrice * numShares)
             console.log("its coming")
             console.log(currentPrice, dayChange, totalChange)
           });
@@ -49,10 +49,11 @@ const AddStockPage = () => {
 
 return(
     <div className='add-stock-page'>
+        <Sidebar/>
             <div className='stock-form'>
                 <form>
                     <label>
-                        Ticker:
+                        Ticker
                         <input
                         type='text'
                         value={ticker}
@@ -60,7 +61,7 @@ return(
                         />
                     </label>
                     <label>
-                        Number of Shares:
+                        Number of Shares
                         <input
                         type='text'
                         value={numShares}
@@ -68,10 +69,37 @@ return(
                         />
                     </label>
                     <label>
-                        Price Bought:
+                        Price Bought
                         <input
                         type='text'
                         value={priceBought}
+                        onChange={(e) => setPriceBought(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Day's Change (%)
+                        <input
+                        disabled='true'
+                        type='text'
+                        value={dayChange}
+                        onChange={(e) => setPriceBought(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Current Price:
+                        <input
+                        disabled='true'
+                        type='text'
+                        value={currentPrice}
+                        onChange={(e) => setPriceBought(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Total Current Value:
+                        <input
+                        disabled='true'
+                        type='text'
+                        value={totalValue}
                         onChange={(e) => setPriceBought(e.target.value)}
                         />
                     </label>

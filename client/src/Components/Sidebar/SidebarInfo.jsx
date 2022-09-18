@@ -10,10 +10,10 @@ export const SidebarInfo = [
     },
     {
         icon: <FormatListBulletedIcon/>,
-        linkTo: "/portfolios",
+        linkTo: '/portfolios',
     },
     {
         icon: <InfoIcon/>,
-        linkTo: "/addstock",
+        linkTo: "/info",
     }
 ]

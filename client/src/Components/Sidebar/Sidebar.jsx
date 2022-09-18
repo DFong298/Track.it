@@ -1,6 +1,7 @@
 import React from 'react';
 import './Sidebar.css';
 import { SidebarInfo } from './SidebarInfo';
+import { Link } from "react-router-dom"
 import logoIcon from '../../Assets/logoIcon.svg';
 
 const Sidebar = () => {
@@ -13,10 +14,15 @@ const Sidebar = () => {
             />
             <ul className='side-bar-list'>
                 {SidebarInfo.map((val, key) => {
-                    return <li key={key} 
-                    className='row'
-                    onClick={() => {window.location.pathname = val.linkTo}}> 
-                    <div>{val.icon}</div></li>
+                    return (
+                    <Link to={`${val.linkTo}`} style={{ textDecoration: 'none' }}>
+                        <li key={key} 
+                            className='row'
+                            > 
+                            <div>{val.icon}</div>
+                        </li>
+                    </Link>
+                    )
                 })}
             </ul>
         </div>

@@ -32,7 +32,9 @@ app.get('/retrievePortfolio', (req, res) => {
 
 
 app.get('/updatePortfolio', (req, res) => {
-    let sqlQuery ='SELECT ticker, numshares, pricebought FROM track_it.portfolio';
+    let sqlQuery ='SELECT ticker, numshares, pricebought, currentprice FROM track_it.portfolio';
+    let totalValue = 0
+    let originalValue = 0
     db.query(sqlQuery, async function(err, result) {
         if (err) {
             console.log(err)
@@ -44,12 +46,13 @@ app.get('/updatePortfolio', (req, res) => {
                     url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${result[i].ticker}`,
                     params: {},
                     headers: {
-                        'x-api-key': 'Z0vg8MtmfgC9Cp5J7wCJ70DHAf7hBQB2f6KwgDje'
+                        'x-api-key': process.env.APIKEY
                     }
                 };
                 console.log(result[i].ticker, result[i].numshares, result[i].pricebought)
                 let response = await Axios.request(options)
-
+                totalValue += (response.data.quoteResponse.result[0].regularMarketPrice * result[i].numShares)
+                originalValue += (result[i].priceBought * result[i].numShares)
                 let updateQuery =`UPDATE track_it.portfolio SET daychange = "${parseFloat(response.data.quoteResponse.result[0].regularMarketChange).toFixed(2)}", 
                         currentprice = "${response.data.quoteResponse.result[0].regularMarketPrice}",
                         totalchange = "${((response.data.quoteResponse.result[0].regularMarketPrice - result[i].pricebought) / result[i].pricebought).toFixed(2) * 100}",
@@ -60,6 +63,8 @@ app.get('/updatePortfolio', (req, res) => {
                     else console.log("Successfully updated")
                 })
             }
+            let totalChange = ((totalValue - originalValue)/originalValue)
+            res.json([totalChange, totalValue])
         }
     })
 })

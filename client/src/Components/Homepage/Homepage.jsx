@@ -16,7 +16,7 @@ const HomePage = () => {
                     className='main-banner'
                 />
                 <Link to='/portfolios' style={{ textDecoration: 'none' }}>
-                    <button className='get-started'>Get Started</button>
+                    <button className='get-started'>View Portfolio</button>
                 </Link>
             </div>
         </div>

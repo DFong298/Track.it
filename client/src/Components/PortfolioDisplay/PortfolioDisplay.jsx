@@ -14,6 +14,8 @@ import Paper from '@mui/material/Paper';
 const PortfolioDisplay = () => {
 
     const [data, setData] = useState([])
+    const [totalChange, setTotalChange] = useState("")
+    const [totalValue, setTotalValue] = useState("")
     const [isUpdated, setIsUpdated] = useState(false)
 
     const retrievePortfolio = async () => {
@@ -26,6 +28,9 @@ const PortfolioDisplay = () => {
     const updatePortfolio = async () => {
         await Axios.get('http://localhost:3001/updatePortfolio', {
         }).then((response) => {
+            //setTotalChange(response.data[0])
+            //setTotalValue(response.data[1])
+            console.log(response)
             setIsUpdated(true)
         });
     }
@@ -35,11 +40,13 @@ const PortfolioDisplay = () => {
     }, [])
 
     useEffect(() => {
+        updatePortfolio();
         retrievePortfolio();
     }, [isUpdated])
 
     useEffect(() => {
         console.log(data)
+        updatePortfolio();
     }, [data]) 
 
     return(
@@ -90,8 +97,8 @@ const PortfolioDisplay = () => {
                         <TableCell align="center" width='12%'></TableCell>
                         <TableCell align="center" width='12%'></TableCell>
                         <TableCell align="center" width='12%'></TableCell>
-                        <TableCell align="center" width='12%'>Total Portfolio %</TableCell>
-                        <TableCell align='center' width='12%'>Portfolio Value</TableCell>
+                        <TableCell align="center" width='12%'>${totalChange} %</TableCell>
+                        <TableCell align='center' width='12%'>${totalValue} $</TableCell>
                     </TableRow>
                     </TableBody>
                 </Table>
