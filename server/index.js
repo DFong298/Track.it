@@ -76,7 +76,6 @@ app.get('/updatePortfolio', (req, res) => {
 
 app.post('/getData', (req, res) => {
     let ticker = req.body.ticker
-
     let options = {
         method: 'GET',
         url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${ticker}`,
