@@ -19,13 +19,13 @@ const AddStockPage = () => {
 
   const getData = () => {
     console.log("button")
-    /*Axios.post("http://localhost:3001/getData", {
+    Axios.post("http://localhost:3001/getData", {
       ticker: ticker,
     }).then((response) => {
       setName(response.data.quoteResponse.result[0].shortName);
       setCurrentPrice(response.data.quoteResponse.result[0].regularMarketPrice);
       setDayChange(
-        response.data.quoteResponse.result[0].regularMarketChangePercent
+        response.data.quoteResponse.result[0].regularMarketChangePercent.toFixed(2)
       );
       setTotalChange(
         (100 *
@@ -33,10 +33,11 @@ const AddStockPage = () => {
             priceBought)) /
           priceBought
       );
-      setTotalValue(currentPrice * numShares);
+      console.log(totalChange)
+      setTotalValue((currentPrice * numShares).toFixed(2));
       console.log("its coming");
       console.log(currentPrice, dayChange, totalChange);
-    });*/
+    });
   };
 
   const sendData = () => {

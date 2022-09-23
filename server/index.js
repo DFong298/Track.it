@@ -36,7 +36,6 @@ app.get('/updatePortfolio', (req, res) => {
     let totalValue = 0;
     let originalValue = 0;
     let totalChange = 0;
-    console.log(totalValue, originalValue, totalChange)
     db.query(sqlQuery, async function(err, result) {
         if (err) {
             console.log(err)
@@ -47,7 +46,7 @@ app.get('/updatePortfolio', (req, res) => {
                     url: `https://yfapi.net/v6/finance/quote?region=US&lang=en&symbols=${result[i].ticker}`,
                     params: {},
                     headers: {
-                        'x-api-key': 'Z0vg8MtmfgC9Cp5J7wCJ70DHAf7hBQB2f6KwgDje'
+                        'x-api-key': process.env.APIKEY
                     }
                 };
                 let response = await Axios.request(options)
@@ -55,17 +54,17 @@ app.get('/updatePortfolio', (req, res) => {
                 console.log(totalValue)
                 originalValue += (result[i].pricebought * result[i].numshares)
                 console.log(originalValue)
-                let updateQuery =`UPDATE track_it.portfolio SET daychange = "${parseFloat(response.data.quoteResponse.result[0].regularMarketChange).toFixed(2)}", 
+                let updateQuery =`UPDATE track_it.portfolio SET daychange = "${(response.data.quoteResponse.result[0].regularMarketChangePercent).toFixed(2)}", 
                         currentprice = "${response.data.quoteResponse.result[0].regularMarketPrice}",
-                        totalchange = "${((response.data.quoteResponse.result[0].regularMarketPrice - result[i].pricebought) / result[i].pricebought).toFixed(2) * 100}",
+                        totalchange = "${(100 *((response.data.quoteResponse.result[0].regularMarketPrice - result[i].pricebought) / result[i].pricebought)).toFixed(2)}",
                         totalvalue = "${result[i].numshares * response.data.quoteResponse.result[0].regularMarketPrice}"
                         WHERE ticker = "${result[i].ticker}"`;
                 db.query(updateQuery, function(err, output) {
                     if (err) console.log(err)
-                    else console.log("Successfully updated for ticker: " + result[i].ticker)
+                    else console.log("Successfully updated for ticker: " + result[i].ticker + (response.data.quoteResponse.result[0].regularMarketChangePercent).toFixed(2))
                 })
             }
-            totalChange = (100*((totalValue - originalValue)/originalValue)).toFixed(2)
+            totalChange = ((totalValue - originalValue)/originalValue).toFixed(2)
             console.log(totalChange)
             res.send([totalChange, totalValue])
         }
@@ -100,7 +99,7 @@ app.post('/sendData', (req, res) => {
     let priceBought = parseFloat(req.body.priceBought)
     let currentPrice = parseFloat(req.body.currentPrice)
     let dayChange = parseFloat(req.body.dayChange).toFixed(2)
-    let totalChange = parseFloat(req.body.totalChange).toFixed(2)
+    let totalChange = req.body.totalChange
     let totalValue = parseFloat(req.body.totalValue).toFixed(2)
 
     let sqlQuery = 'INSERT INTO track_it.portfolio (ticker, stockname, numshares, pricebought, currentprice, daychange, totalchange, totalvalue) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'

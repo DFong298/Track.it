@@ -95,8 +95,8 @@ const PortfolioDisplay = () => {
                         <TableCell align="center" width='12%'></TableCell>
                         <TableCell align="center" width='12%'></TableCell>
                         <TableCell align="center" width='12%'></TableCell>
-                        <TableCell align="center" width='12%'>${totalChange} %</TableCell>
-                        <TableCell align='center' width='12%'>${totalValue} $</TableCell>
+                        {/*<TableCell align="center" width='12%'>${totalChange} %</TableCell>*/}
+                        {/*<TableCell align='center' width='12%'>${totalValue} $</TableCell>*/}
                     </TableRow>
                     </TableBody>
                 </Table>
